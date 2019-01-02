@@ -114,7 +114,7 @@ class ListBuilder extends Plugin
             'signups' => ['label' => 'Signups', 'url' => 'list-builder/signups'],
             'sources' => ['label' => 'Sources', 'url' => 'list-builder/sources'],
             'destinations' => ['label' => 'Destinations', 'url' => 'list-builder/destinations'],
-            'settings' => ['label' => 'Settings', 'url' => 'list-builder/settings'],
+            'settings' => ['label' => 'Settings', 'url' => 'settings/plugins/list-builder'],
         ];
         return $item;
     }
@@ -209,7 +209,7 @@ class ListBuilder extends Plugin
 
     public function settingsHtml()
     {
-        return \Craft::$app->getView()->renderTemplate('list-builder/settings/index', [
+        return \Craft::$app->getView()->renderTemplate('list-builder/settings', [
             'settings' => $this->getSettings()
         ]);
     }
