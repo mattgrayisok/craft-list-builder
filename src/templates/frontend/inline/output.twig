@@ -1,0 +1,41 @@
+{% set formStatus = craft.app.session.getFlash('lb-status-' ~ source.shortcode) %}
+{% set formError = craft.app.session.getFlash('lb-status-error-' ~ source.shortcode) %}
+<div class="lb-inline theme{{source.getConfigValue('theme')}}
+    {{ formStatus ? 'lb-status--' ~ formStatus : '' }}
+    {{ source.getConfigValue('labels') == 1 ? 'lb-inline--with-labels' : '' }}
+    "
+    >
+    <form method="POST" class="lb-form" data-ajax-enabled="{{ source.getConfigValue('ajax') ? '1' : '0' }}">
+        <input type="hidden" name="action" value="list-builder/signup/store">
+        <input type="hidden" name="source" value="{{ source.shortcode }}">
+        {{ csrfInput() }}
+
+        {####  Display  ####}
+        {% if source.getConfigValue('title')|length %}
+        <div class="lb-title">{{ source.getConfigValue('title') }}</div>
+        {% endif %}
+        {% if source.getConfigValue('text')|length %}
+        <div class="lb-text">{{ source.getConfigValue('text') }}</div>
+        {% endif %}
+
+        {####  Fields  ####}
+        {% if source.getConfigValue('labels') == 1 %}
+        <label class="lb-label" for="email-{{rand}}">Your Email</label>
+        {% endif %}
+        <input class="lb-input lb-input--email" type="email" id="email-{{rand}}" name="email" placeholder="Your Email">
+
+        {####  Submit  ####}
+        <button class="lb-submit" type="submit">Subscribe</button>
+
+        {####  Success  ####}
+        {% if source.getConfigValue('success-message')|length > 0 %}
+        <div class="lb-success-message">{{ source.getConfigValue('success-message') }}</div>
+        {% endif %}
+
+        {####  Error  ####}
+        <div class="lb-error-message">
+            {{ formError }}
+        </div>
+
+    </form>
+</div>

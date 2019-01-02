@@ -1,0 +1,101 @@
+{% import "_includes/forms" as forms %}
+
+<form action="" method="POST">
+    <input type="hidden" name="action" value="list-builder/source/edit">
+    <input type="hidden" name="type" value="2">
+
+    {% if source.id %}<input type="hidden" name="sourceId" value="{{ source.id }}">{% endif %}
+    {{ csrfInput() }}
+
+    <p class="type-description">
+        Inline forms can be embedded into your site with a short piece of twig code.
+        You can choose a predefined theme or style the whole form yourself.
+    </p>
+
+    {{ forms.textField({
+        label: "Reference" | t('list-builder'),
+        instructions: "Add a reference for this signup source so that it's easy to identify later." | t('list-builder'),
+        id: 'name',
+        name: 'name',
+        value: source.name,
+        errors: source.getErrors('name'),
+        required: false,
+    }) }}
+
+    <div class="field" id="theme-field">
+        <div class="heading">
+            <label id="theme-label" for="theme">Theme</label>
+            <div class="instructions">
+                <p>Select a theme for your form or leave it unstyled for maximum control.</p>
+            </div>
+        </div>
+        <div class="input ltr">
+            <input class="lb-hidden-radio" type="radio" name="conf-theme" value="1" id="type2theme1"
+                {{ not source.getConfigValue('theme') or source.getConfigValue('theme') == 1 ? 'checked="checked"' : '' }}
+                >
+            <label class="lb-theme-select-label" for="type2theme1">
+                {% set previewUrl = view.getAssetManager().getPublishedUrl('@mattgrayisok/listbuilder/assetbundles/listbuilder/dist', true) ~ '/img/inlineTheme1.png' %}
+                <span>No Styles</span>
+                <img src="{{ previewUrl }}" width="300px">
+            </label>
+            <input class="lb-hidden-radio" type="radio" name="conf-theme" value="2" id="type2theme2"
+                {{ source.getConfigValue('theme') == 2 ? 'checked="checked"' : '' }}
+                >
+            <label class="lb-theme-select-label" for="type2theme2">
+                {% set previewUrl = view.getAssetManager().getPublishedUrl('@mattgrayisok/listbuilder/assetbundles/listbuilder/dist', true) ~ '/img/inlineTheme2.png' %}
+                <span>Simple</span>
+                <img src="{{ previewUrl }}" width="300px">
+            </label>
+        </div>
+    </div>
+
+    {{ forms.textField({
+        label: "Title" | t('list-builder'),
+        instructions: "The main heading for the form." | t('list-builder'),
+        id: 'conf-title',
+        name: 'conf-title',
+        value: source.getConfigValue('title'),
+        errors: source.getErrors('title'),
+        required: false,
+    }) }}
+
+    {{ forms.textField({
+        label: "Text" | t('list-builder'),
+        instructions: "Any text which appears under the main title." | t('list-builder'),
+        id: 'conf-text',
+        name: 'conf-text',
+        value: source.getConfigValue('text'),
+        errors: source.getErrors('text'),
+        required: false,
+    }) }}
+
+    {{ forms.lightswitchField({
+        label: "Use Ajax" | t('list-builder'),
+        instructions: "Should the form use ajax to avoid page reloads?" | t('list-builder'),
+        name: 'conf-ajax',
+        on: source.getConfigValue('ajax') ?? true,
+    }) }}
+
+    {{ forms.textField({
+        label: "Redirect" | t('list-builder'),
+        instructions: "For non-ajax submissions, where should the user be redirected after signup?<br>Leave blank to redirect back to the previous page.<br>Aliases such as '@web' are available.",
+        id: 'conf-redirect',
+        name: 'conf-redirect',
+        value: source.getConfigValue('redirect'),
+        errors: source.getErrors('redirect'),
+        required: false,
+    }) }}
+
+    {{ forms.textField({
+        label: "Success message" | t('list-builder'),
+        instructions: "The message to display when a user successfully subscribes.",
+        id: 'conf-success-message',
+        name: 'conf-success-message',
+        value: source.getConfigValue('success-message'),
+        errors: source.getErrors('success-message'),
+        required: false,
+    }) }}
+
+    <button type="submit" class="btn submit">Save</button>
+
+</form>

@@ -1,0 +1,97 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * List Builder plugin for Craft CMS 3.x
+ *
+ * List Builder index.twig
+ *
+ * @author    Matt Gray
+ * @copyright Copyright (c) 2018 Matt Gray
+ * @link      https://mattgrayisok.com
+ * @package   ListBuilder
+ * @since     1.0.0
+ */
+#}
+
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("mattgrayisok\\listbuilder\\assetbundles\\listbuilder\\ListBuilderAsset") %}
+
+{% set docsUrl = "https://github.com/mattgrayisok/craft-list-builder/blob/master/README.md" %}
+
+{% set title = "Destinations" %}
+
+{% set pluginCpUrl = url('list-builder') %}
+{% set selectedSubnavItem = 'destinations' %}
+
+{% block actionButton %}
+    <a href="{{ url('list-builder/destinations/new') }}" class="btn submit add icon">{{ 'New destination'|t('list-builder') }}</a>
+    <a href="{{ url('list-builder/destinations/sync') }}" class="btn">{{ 'Sync All'|t('list-builder') }}</a>
+{% endblock %}
+
+{% set content %}
+    <table class="data fullwidth collapsible">
+        <thead>
+            <tr>
+                <th class="thin" scope="col"></th>
+                <th scope="col">Name</th>
+                <th scope="col">Failed Submissions</th>
+                <th scope="col">Enabled</th>
+                <th class="thin" scope="col"></th>
+                <th class="thin" scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for destination in destinations %}
+            <tr>
+                <td>
+                    <img src="{{ destination.getUrlForTypeIcon() }}" height="32" />
+                </td>
+                <th scope="row">
+                    <a href="{{ url('list-builder/destinations/' ~ destination.id) }}">
+                        {{ destination.name }}
+                    </a>
+                </th>
+
+                <td>
+                    {{ destination.getFailedSubmissionsCount() }}
+                </td>
+
+                <td>
+                    <form method="POST" action="">
+                        {{ csrfInput() }}
+                        <input type="hidden" name="action"
+                            value="{{ 'list-builder/destination/' ~ (destination.enabled ? 'disable' : 'enable') }}"
+                        >
+                        <input type="hidden" name="destinationId" value="{{ destination.id }}">
+                        <div class="lightswitch {{ destination.enabled ? 'on' : '' }} js-list-builder-click-submit" role="checkbox">
+                            <div class="lightswitch-container">
+                                <div class="label on"></div>
+                                <div class="handle"></div>
+                                <div class="label off"></div>
+                            </div>
+                        </div>
+                    </form>
+                </td>
+
+                <td class="thin">
+                    {% if destination.errorMsg %}
+                        <div title="{{ destination.errorMsg }}" class="icon list-builder-alert"></div>
+                    {% endif %}
+                </td>
+
+                <td class="thin">
+                    <form method="POST" action="" class="">
+                        {{ csrfInput() }}
+                        <input type="hidden" name="action" value="list-builder/destination/delete">
+                        <input type="hidden" name="destinationId" value="{{ destination.id }}">
+                        <a type="submit" class="delete icon js-list-builder-click-submit" title="Delete" role="button"></a>
+                    </form>
+                </td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endset %}

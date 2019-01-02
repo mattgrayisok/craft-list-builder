@@ -1,0 +1,94 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * List Builder plugin for Craft CMS 3.x
+ *
+ * List Builder index.twig
+ *
+ * @author    Matt Gray
+ * @copyright Copyright (c) 2018 Matt Gray
+ * @link      https://mattgrayisok.com
+ * @package   ListBuilder
+ * @since     1.0.0
+ */
+#}
+
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+{% import _self as selfMacros %}
+
+{% do view.registerAssetBundle("mattgrayisok\\listbuilder\\assetbundles\\listbuilder\\ListBuilderAsset") %}
+
+{% set docsUrl = "https://github.com/mattgrayisok/craft-list-builder/blob/master/README.md" %}
+
+{% set title = destination.id ? "Edit Destination" : "New Destination" %}
+
+{% set pluginCpUrl = url('list-builder/destinations/new') %}
+{% set selectedSubnavItem = 'destinations' %}
+
+{% macro listItem(typeNum, selected, name) %}
+    <li>
+        <a href="#" class="js-list-builder-service-selector
+                            {{ selected ? 'sel' : ''}}"
+                            data-type="{{ typeNum }}">
+            <div class="icon">
+                {% set iconUrl = view.getAssetManager().getPublishedUrl('@mattgrayisok/listbuilder/assetbundles/listbuilder/dist', true) ~ '/img/destinationType' ~ typeNum ~ '.svg' %}
+                <img src="{{ iconUrl }}" height="64" />
+            </div>
+            {{ name }}
+        </a>
+    </li>
+{% endmacro %}
+
+{% set content %}
+
+    {% if not destination.id %}
+    <h2>{{ "Select a service"|t('list-builder') }}</h2>
+    {% endif %}
+
+    <div class="type-selector">
+        <ul class="icons">
+            {% if not destination.id or destination.type == 1 %}
+            {{ selfMacros.listItem(1, destination.type == 1, "Webhook") }}
+            {% endif %}
+            {% if not destination.id or destination.type == 2 %}
+            {{ selfMacros.listItem(2, destination.type == 2, "Mailchimp") }}
+            {% endif %}
+            {% if not destination.id or destination.type == 3 %}
+            {{ selfMacros.listItem(3, destination.type == 3, "SendGrid") }}
+            {% endif %}
+            {% if not destination.id or destination.type == 4 %}
+            {{ selfMacros.listItem(4, destination.type == 4, "Email Octopus") }}
+            {% endif %}
+            {% if not destination.id or destination.type == 5 %}
+            {{ selfMacros.listItem(5, destination.type == 5, "Drip") }}
+            {% endif %}
+        </ul>
+    </div>
+
+    {% if destination.id %}
+        <div class="js-list-builder-service-pane" data-type="{{ destination.type }}">
+            {% include 'list-builder/destinations/forms/type'~destination.type %}
+        </div>
+    {% else %}
+        <div class="js-list-builder-service-pane" data-type="1">
+            {% include 'list-builder/destinations/forms/type1' %}
+        </div>
+        <div class="js-list-builder-service-pane" data-type="2" style="display:none">
+            {% include 'list-builder/destinations/forms/type2' %}
+        </div>
+        <div class="js-list-builder-service-pane" data-type="3" style="display:none">
+            {% include 'list-builder/destinations/forms/type3' %}
+        </div>
+        <div class="js-list-builder-service-pane" data-type="4" style="display:none">
+            {% include 'list-builder/destinations/forms/type4' %}
+        </div>
+        <div class="js-list-builder-service-pane" data-type="5" style="display:none">
+            {% include 'list-builder/destinations/forms/type5' %}
+        </div>
+    {% endif %}
+
+
+
+
+{% endset %}

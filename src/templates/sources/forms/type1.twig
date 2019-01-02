@@ -1,0 +1,38 @@
+{% import "_includes/forms" as forms %}
+
+<form action="" method="POST">
+    <input type="hidden" name="action" value="list-builder/source/edit">
+    <input type="hidden" name="type" value="1">
+
+    {% if source.id %}<input type="hidden" name="sourceId" value="{{ source.id }}">{% endif %}
+    {{ csrfInput() }}
+
+    <p class="type-description">
+        Custom sources will just set up the back end for you, so all of the front end implementation is up to you.
+        This is useful if you need very strict control over the DOM or you are building an SPA which isn't powered
+        by your twig templates.
+    </p>
+
+    {{ forms.textField({
+        label: "Reference" | t('list-builder'),
+        instructions: "Add a reference for this signup source so that it's easy to identify later." | t('post-to-social'),
+        id: 'name',
+        name: 'name',
+        value: source.name,
+        errors: source.getErrors('name'),
+        required: false,
+    }) }}
+
+    {{ forms.textField({
+        label: "Redirect" | t('list-builder'),
+        instructions: "For non-ajax submissions, where should the user be redirected after signup?<br>Leave blank to redirect back to the previous page.<br>Aliases such as '@web' are available.",
+        id: 'conf-redirect',
+        name: 'conf-redirect',
+        value: source.getConfigValue('redirect'),
+        errors: source.getErrors('redirect'),
+        required: false,
+    }) }}
+
+    <button type="submit" class="btn submit">Save</button>
+
+</form>

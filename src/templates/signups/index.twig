@@ -1,0 +1,46 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * List Builder plugin for Craft CMS 3.x
+ *
+ * List Builder index.twig
+ *
+ * @author    Matt Gray
+ * @copyright Copyright (c) 2018 Matt Gray
+ * @link      https://mattgrayisok.com
+ * @package   ListBuilder
+ * @since     1.0.0
+ */
+#}
+
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("mattgrayisok\\listbuilder\\assetbundles\\listbuilder\\ListBuilderAsset") %}
+
+{% set docsUrl = "https://github.com/mattgrayisok/craft-list-builder/blob/master/README.md" %}
+
+{% set title = "Signups" %}
+
+{% set pluginCpUrl = url('list-builder') %}
+{% set selectedSubnavItem = 'signups' %}
+
+{# block actionButton %}
+    <a href="{{ url('list-builder/signups/export') }}" class="btn submit">{{ 'Export to CSV'|t('list-builder') }}</a>
+{% endblock #}
+
+{# set iconUrl = view.getAssetManager().getPublishedUrl('@mattgrayisok/listbuilder/assetbundles/listbuilder/dist', true) ~ '/img/Index-icon.svg' #}
+
+{% set content %}
+    <table id="signups-table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Added</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </div>
+{% endset %}

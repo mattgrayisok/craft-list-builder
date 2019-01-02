@@ -1,0 +1,94 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * List Builder plugin for Craft CMS 3.x
+ *
+ * List Builder index.twig
+ *
+ * @author    Matt Gray
+ * @copyright Copyright (c) 2018 Matt Gray
+ * @link      https://mattgrayisok.com
+ * @package   ListBuilder
+ * @since     1.0.0
+ */
+#}
+
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("mattgrayisok\\listbuilder\\assetbundles\\listbuilder\\ListBuilderAsset") %}
+
+{% set docsUrl = "https://github.com/mattgrayisok/craft-list-builder/blob/master/README.md" %}
+
+{% set title = "List Builder" %}
+
+{% set pluginCpUrl = url('list-builder') %}
+{% set selectedSubnavItem = 'dashboard' %}
+
+{% set iconUrl = view.getAssetManager().getPublishedUrl('@mattgrayisok/listbuilder/assetbundles/listbuilder/dist', true) ~ '/img/icon.svg' %}
+
+{% set content %}
+
+    {% if  sourceCount == 0 and destinationCount == 0 %}
+
+    <div class="lb-intro-wrapper">
+        <div class="lb-intro-logo">
+            <img src="{{ iconUrl }}">
+        </div>
+        <p class="lb-intro-q">
+            Welcome to List Builder!
+        </p>
+        <p class="lb-intro-p">
+            There's a few things we need to cover before we start getting set up.
+        </p>
+
+        <p class="lb-intro-q">
+            What does it do?
+        </p>
+        <p class="lb-intro-p">
+            List Builder helps you to collect email addresses and send them to other services.
+            It does this by making it really easy to create subscription forms and show them to
+            your users at an appropriate time.
+        </p>
+        <p class="lb-intro-q">
+            What does it not do?
+        </p>
+        <p class="lb-intro-p">
+            List Builder does not send any emails. The 3rd party services that you
+            sync the collected emails addresses with handle that bit. If you don't already have
+            a service set up to send your emails check out
+            <a target="_blank" ref="noopener" href="https://www.mailchimp.com">Mailchimp</a> or
+            <a target="_blank" ref="noopener" href="https://www.drip.com">Drip</a>.
+        </p>
+        <p class="lb-intro-q">
+            What should I do first?
+        </p>
+        <p class="lb-intro-p">
+            You'll need to create a
+            <a href="{{ url('list-builder/sources/') }}">Source</a>
+            (a method of collecting emails) and a
+            <a href="{{ url('list-builder/destinations/') }}">Destination</a> (somewhere to send all of the collected emails). You can
+            find the sections you need to create these in the left hand nav.
+        </p>
+        <p class="lb-intro-q">
+            Can I collect emails without creating a destination?
+        </p>
+        <p class="lb-intro-p">
+            You certainly can. Email will all go into the
+            <a href="{{ url('list-builder/signups/') }}">Signups</a>
+            section of this plugin. From there you can search through subscribers.
+            (In the next update you'll be able to
+            export them as a CSV).
+        </p>
+    </div>
+
+    {% else %}
+
+    <h2>{{ "Last 7 days signups"|t('list-builder') }}</h2>
+    <div class="signups-chart-wrapper">
+        <canvas id="signupsChart" width="100%" height="400px"></canvas>
+    </div>
+
+    {% endif %}
+
+{% endset %}

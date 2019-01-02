@@ -1,0 +1,39 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * List Builder plugin for Craft CMS 3.x
+ *
+ * List Builder index.twig
+ *
+ * @author    Matt Gray
+ * @copyright Copyright (c) 2018 Matt Gray
+ * @link      https://mattgrayisok.com
+ * @package   ListBuilder
+ * @since     1.0.0
+ */
+#}
+
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("mattgrayisok\\listbuilder\\assetbundles\\listbuilder\\ListBuilderAsset") %}
+
+{% set docsUrl = "https://github.com/mattgrayisok/craft-list-builder/blob/master/README.md" %}
+
+{% set title = "List Builder" %}
+
+{% set pluginCpUrl = url('list-builder') %}
+
+{% set iconUrl = view.getAssetManager().getPublishedUrl('@mattgrayisok/listbuilder/assetbundles/listbuilder/dist', true) ~ '/img/Index-icon.svg' %}
+
+{% set extraPageHeaderHtml %}
+    <div class="buttons">
+        <a href="{{ pluginCpUrl }}" class="btn submit add icon">{{ "Click Me!"|t('list-builder') }}</a>
+    </div>
+{% endset %}
+
+{% set content %}
+    <h2>{{ "Index CP Section body goes here"|t('list-builder') }}</h2>
+    <img src="{{ iconUrl }}" height="64" width="64" />
+    <p class="textline"></p>
+{% endset %}

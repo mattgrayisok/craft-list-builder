@@ -1,0 +1,47 @@
+{
+    "name": "mattgrayisok/craft-list-builder",
+    "description": "The ultimate Craft CMS mailing list builder. Collect emails easily and sync with popular mailing list services.",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "list builder",
+        "email",
+        "mailing list"
+    ],
+    "support": {
+        "docs": "https://github.com/mattgrayisok/craft-list-builder/blob/master/README.md",
+        "issues": "https://github.com/mattgrayisok/craft-list-builder/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matt Gray",
+            "homepage": "https://mattgrayisok.com"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1",
+        "drewm/mailchimp-api": "^2.5",
+        "sendgrid/sendgrid": "^7.2.1",
+        "dripemail/drip-php": "^1.2.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "mattgrayisok\\listbuilder\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "List Builder",
+        "handle": "list-builder",
+        "hasCpSettings": false,
+        "hasCpSection": true,
+        "changelogUrl": "https://raw.githubusercontent.com/mattgrayisok/craft-list-builder/master/CHANGELOG.md",
+        "components": {
+        },
+        "class": "mattgrayisok\\listbuilder\\ListBuilder"
+    }
+}

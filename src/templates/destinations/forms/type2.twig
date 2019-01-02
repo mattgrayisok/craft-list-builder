@@ -1,0 +1,49 @@
+{% import "_includes/forms" as forms %}
+
+<form action="" method="POST">
+    <input type="hidden" name="action" value="list-builder/destination/edit">
+    <input type="hidden" name="type" value="2">
+
+    {% if destination.id %}<input type="hidden" name="destinationId" value="{{ destination.id }}">{% endif %}
+    {{ csrfInput() }}
+
+    {{ forms.textField({
+        label: "Reference" | t('list-builder'),
+        instructions: "Add a reference for this signup destination so that it's easy to identify later." | t('list-builder'),
+        id: 'name',
+        name: 'name',
+        value: destination.name,
+        errors: destination.getErrors('name'),
+        required: false,
+    }) }}
+
+    {{ forms.textField({
+        label: "API Key" | t('list-builder'),
+        instructions: "Mailchimp API Key." | t('list-builder'),
+        id: 'conf-apikey',
+        name: 'conf-apikey',
+        value: destination.getConfigValue('apikey'),
+        errors: destination.getErrors('apikey'),
+        required: true,
+    }) }}
+
+    {{ forms.textField({
+        label: "List Id" | t('list-builder'),
+        instructions: "Mailchimp List Id." | t('list-builder'),
+        id: 'conf-listid',
+        name: 'conf-listid',
+        value: destination.getConfigValue('listid'),
+        errors: destination.getErrors('listid'),
+        required: true,
+    }) }}
+
+    {{ forms.lightswitchField({
+        label: "Disable On Unexpected Error" | t('list-builder'),
+        instructions: "If a remote server error occurs that we aren't sure how to handle, should the destination be disabled?" | t('list-builder'),
+        name: 'conf-disableonerror',
+        on: destination.getConfigValue('disableonerror') ?? true,
+    }) }}
+
+    <button type="submit" class="btn submit">Save</button>
+
+</form>

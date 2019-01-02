@@ -1,0 +1,79 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * List Builder plugin for Craft CMS 3.x
+ *
+ * List Builder index.twig
+ *
+ * @author    Matt Gray
+ * @copyright Copyright (c) 2018 Matt Gray
+ * @link      https://mattgrayisok.com
+ * @package   ListBuilder
+ * @since     1.0.0
+ */
+#}
+
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+{% import _self as selfMacros %}
+
+{% do view.registerAssetBundle("mattgrayisok\\listbuilder\\assetbundles\\listbuilder\\ListBuilderAsset") %}
+
+{% set docsUrl = "https://github.com/mattgrayisok/craft-list-builder/blob/master/README.md" %}
+
+{% set title = source.id ? "Edit Source" : "New Source" %}
+
+{% set pluginCpUrl = url('list-builder/sources/new') %}
+{% set selectedSubnavItem = 'sources' %}
+
+{% macro listItem(typeNum, selected, name) %}
+    <li>
+        <a href="#" class="js-list-builder-service-selector
+                            {{ selected ? 'sel' : ''}}"
+                            data-type="{{ typeNum }}">
+            <div class="icon">
+                {% set iconUrl = view.getAssetManager().getPublishedUrl('@mattgrayisok/listbuilder/assetbundles/listbuilder/dist', true) ~ '/img/sourceType' ~ typeNum ~ '.svg' %}
+                <img src="{{ iconUrl }}" height="64" />
+            </div>
+            {{ name }}
+        </a>
+    </li>
+{% endmacro %}
+
+{% set content %}
+
+    {% if not source.id %}
+    <h2>{{ "Select a source type"|t('list-builder') }}</h2>
+    {% endif %}
+
+    <div class="type-selector">
+        <ul class="icons">
+            {% if not source.id or source.type == 1 %}
+            {{ selfMacros.listItem(1, source.type == 1, "Custom") }}
+            {% endif %}
+            {% if not source.id or source.type == 2 %}
+            {{ selfMacros.listItem(2, source.type == 2, "Inline") }}
+            {% endif %}
+            {% if not source.id or source.type == 3 %}
+            {{ selfMacros.listItem(3, source.type == 3, "Popup") }}
+            {% endif %}
+        </ul>
+    </div>
+
+    {% if source.id %}
+        <div class="js-list-builder-service-pane" data-type="{{ source.type }}">
+            {% include 'list-builder/sources/forms/type'~source.type %}
+        </div>
+    {% else %}
+        <div class="js-list-builder-service-pane" data-type="1">
+            {% include 'list-builder/sources/forms/type1' %}
+        </div>
+        <div class="js-list-builder-service-pane" data-type="2" style="display:none">
+            {% include 'list-builder/sources/forms/type2' %}
+        </div>
+        <div class="js-list-builder-service-pane" data-type="3" style="display:none">
+            {% include 'list-builder/sources/forms/type3' %}
+        </div>
+    {% endif %}
+
+{% endset %}

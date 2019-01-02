@@ -1,0 +1,62 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * List Builder plugin for Craft CMS 3.x
+ *
+ * List Builder index.twig
+ *
+ * @author    Matt Gray
+ * @copyright Copyright (c) 2018 Matt Gray
+ * @link      https://mattgrayisok.com
+ * @package   ListBuilder
+ * @since     1.0.0
+ */
+#}
+
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("mattgrayisok\\listbuilder\\assetbundles\\listbuilder\\ListBuilderAsset") %}
+
+{% set docsUrl = "https://github.com/mattgrayisok/craft-list-builder/blob/master/README.md" %}
+
+{% set title = "Sources" %}
+
+{% set pluginCpUrl = url('list-builder') %}
+{% set selectedSubnavItem = 'sources' %}
+
+{% block actionButton %}
+    <a href="{{ url('list-builder/sources/new') }}" class="btn submit icon add">{{ 'New source'|t('list-builder') }}</a>
+{% endblock %}
+
+{# set iconUrl = view.getAssetManager().getPublishedUrl('@mattgrayisok/listbuilder/assetbundles/listbuilder/dist', true) ~ '/img/Index-icon.svg' #}
+
+{% set content %}
+    <table class="data fullwidth collapsible">
+        <thead>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Emails Collected</th>
+            <th>Code</th>
+            <th>Instructions</th>
+            <th class="thin"></th>
+        </thead>
+        {% for source in sources %}
+            <tr>
+                <th scope="row"><a href="{{ url('list-builder/sources/' ~ source.id) }}">{{ source.name }}</a></th>
+                <td>{{ source.getTypeName() }}</td>
+                <td>{{ source.getTotalEmailsCollected() }}</td>
+                <td>{{ source.shortcode }}</td>
+                <td>Instructions</td>
+                <td class="thin">
+                    <form method="POST" action="" class="">
+                        {{ csrfInput() }}
+                        <input type="hidden" name="action" value="list-builder/source/delete">
+                        <input type="hidden" name="sourceId" value="{{ source.id }}">
+                        <a type="submit" class="delete icon js-list-builder-click-submit" title="Delete" role="button"></a>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endset %}
