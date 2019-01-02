@@ -11,6 +11,7 @@
 namespace mattgrayisok\listbuilder\controllers;
 
 use mattgrayisok\listbuilder\ListBuilder;
+use mattgrayisok\listbuilder\Enums;
 
 use mattgrayisok\listbuilder\models\Signup;
 
@@ -61,7 +62,8 @@ class SignupController extends Controller
             //Table colums
             return [
                 $el->email,
-                $this->fTime($el->dateCreated->getTimestamp())
+                $this->fTime($el->dateCreated->getTimestamp()),
+                ($el->consent == Enums::CONSENT__YES ? 'Yes' : ($el->consent == Enums::CONSENT__NO ? 'No' : 'Unknown')),
             ];
         }, $data['models']);
 
@@ -89,6 +91,7 @@ class SignupController extends Controller
         $this->requirePostRequest();
         $request = Craft::$app->getRequest();
         $email = $request->getParam('email');
+        $consent = $request->getParam('consent');
         $shortcode = $request->getParam('source');
 
         $source = ListBuilder::$plugin->sourceManager->getSourceByShortcode($shortcode);
@@ -99,6 +102,25 @@ class SignupController extends Controller
 
         $signup = new Signup();
         $signup->email = $email;
+
+        $consentVal = Enums::CONSENT__UNKNOWN;
+
+        if($consent === '0' || $consent === 'no'){
+            $consentVal = Enums::CONSENT__NO;
+            //If allow no consent is false, throw an error.
+            //If no valid source is set default to error.
+            if(
+                is_null($source) ||
+                is_null($source->getConfigValue('allownoconsent')) ||
+                $source->getConfigValue('allownoconsent') == false
+            ){
+                return $this->_returnSignupError($source, 'Please check the consent box.');
+            }
+        }else if($consent === '1' || $consent === 'yes'){
+            $consentVal = Enums::CONSENT__YES;
+        }
+
+        $signup->consent = $consentVal;
 
         if(is_null($source)){
             $signup->sourceId = null;
@@ -144,7 +166,7 @@ class SignupController extends Controller
         if ($request->isAjax) {
             return json_encode([
                 'status' => 'error',
-                'message' => 'Invalid email address.'
+                'message' => $msg
             ]);
         }
         if(!is_null($source)){

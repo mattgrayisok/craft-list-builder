@@ -35,6 +35,7 @@ class Source extends Model
     public $boolCasts = [
         'ajax',
         'labels',
+        'gdpr',
     ];
 
     /**

@@ -1,7 +1,7 @@
 {% set formStatus = craft.app.session.getFlash('lb-status-' ~ source.shortcode) %}
 {% set formError = craft.app.session.getFlash('lb-status-error-' ~ source.shortcode) %}
 <div data-source-code="{{ source.shortcode }}"
-     data-show-delay="{{ source.getConfigValue('delay') }}" 
+     data-show-delay="{{ source.getConfigValue('delay') }}"
     class="lb-popup  theme{{source.getConfigValue('theme')}}
     {{ formStatus ? 'lb-status--' ~ formStatus : '' }}
     {{ source.getConfigValue('exitintent') ? 'lb-exit-intent' : '' }}
@@ -14,7 +14,10 @@
             Close
         </a>
 
-        <form method="POST" class="lb-form" data-ajax-enabled="{{ source.getConfigValue('ajax') ? '1' : '0' }}">
+        <form method="POST" class="lb-form"
+            data-ajax-enabled="{{ source.getConfigValue('ajax') ? '1' : '0' }}"
+            data-has-consent="{{ source.getConfigValue('consent') ? '1' : '0' }}"
+            >
             <input type="hidden" name="action" value="list-builder/signup/store">
             <input type="hidden" name="source" value="{{ source.shortcode }}">
             {{ csrfInput() }}
@@ -38,13 +41,27 @@
                 {% endif %}
 
                 {####  Fields  ####}
-                {% if source.getConfigValue('labels') == 1 %}
-                <label class="lb-label" for="email-{{rand}}">Your Email</label>
+                <div class="lb-form-row lb-form-row--input">
+                    {% if source.getConfigValue('labels') == 1 %}
+                    <label class="lb-label" for="email-{{rand}}">Your Email</label>
+                    {% endif %}
+                    <input class="lb-input lb-input--email" type="email" id="email-{{rand}}" name="email" placeholder="Your Email">
+                </div>
+
+                {% if source.getConfigValue('consent') %}
+                <div class="lb-form-row lb-form-row--checkbox">
+                    <input type='hidden' value='0' name='consent'> {# overidden by next input if it is checked #}
+                    <input class="lb-checkbox" type="checkbox" id="consent-{{rand}}" name="consent" value="1">
+                    <label class="lb-checkbox-label" for="consent-{{rand}}">
+                        {{ source.getConfigValue('consenttext')|length ? source.getConfigValue('consenttext')|raw : 'I consent to receive information about services and special offers by email.' }}
+                    </label>
+                </div>
                 {% endif %}
-                <input class="lb-input lb-input--email" type="email" id="email-{{rand}}" name="email" placeholder="Your Email">
 
                 {####  Submit  ####}
-                <button class="lb-submit" type="submit">Subscribe</button>
+                <div class="lb-form-row lb-form-row--buttons">
+                    <button class="lb-submit" type="submit">Subscribe</button>
+                </div>
 
                 {####  Success  ####}
                 {% if source.getConfigValue('success-message')|length > 0 %}

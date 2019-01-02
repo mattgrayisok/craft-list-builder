@@ -18,6 +18,10 @@ abstract class Enums
     const SOURCE_TYPE__POPUP = 3;
     const SOURCE_TYPE__BAR = 4;
 
+    const CONSENT__NO = 0;
+    const CONSENT__YES = 1;
+    const CONSENT__UNKNOWN = 2;
+
     const DESTINATION_TYPE__WEBHOOK = 1;
     const DESTINATION_TYPE__MAILCHIMP = 2;
     const DESTINATION_TYPE__SENDGRID = 3;

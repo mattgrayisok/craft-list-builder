@@ -42,6 +42,14 @@
     margin-bottom: 1em;
 }
 
+.lb-inline.theme2 .lb-form-row{
+    margin-bottom: 0.8em;
+}
+
+.lb-inline.theme2 .lb-form-row--checkbox{
+
+}
+
 .lb-inline.theme2 .lb-input{
     display:inline-block;
     width:80%;
@@ -50,8 +58,40 @@
     font-size:16px;
     border-radius: 4px;
     border: 1px solid #ccc;
-    margin: 0 auto 0.8em;
+    margin: 0 auto;
     box-sizing: border-box;
+}
+
+
+.lb-inline.theme2 .lb-checkbox{
+    display:block;
+    width:0;
+    height:0;
+    overflow: hidden;
+}
+
+.lb-inline.theme2 .lb-checkbox-label{
+    font-size: 0.8em;
+    color: #666;
+    vertical-align: middle;
+    cursor:pointer;
+}
+
+.lb-inline.theme2 .lb-checkbox-label:before{
+    display:inline-block;
+    width: 15px;
+    height:15px;
+    margin-right: 5px;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjIgMnYyMGgtMjB2LTIwaDIwem0yLTJoLTI0djI0aDI0di0yNHoiLz48L3N2Zz4=");
+    background-size: 100%;
+    content:'';
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+}
+
+.lb-inline.theme2 .lb-checkbox:checked + .lb-checkbox-label:before{
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjIgMnYyMGgtMjB2LTIwaDIwem0yLTJoLTI0djI0aDI0di0yNHptLTUuNTQxIDguNDA5bC0xLjQyMi0xLjQwOS03LjAyMSA3LjE4My0zLjA4LTIuOTM3LTEuMzk1IDEuNDM1IDQuNSA0LjMxOSA4LjQxOC04LjU5MXoiLz48L3N2Zz4=");
 }
 
 .lb-inline.theme2 .lb-success-message{
@@ -90,7 +130,6 @@
 	text-shadow:0px 1px 0px #3d768a;
     width:20%;
     min-width:120px;
-    margin-bottom: 0.8em;
     box-sizing: border-box;
 }
 
@@ -107,6 +146,8 @@
 .lb-inline.theme2 .lb-submit:active {
 	transform: scale(0.95);
 }
+
+/* POPUP STYLING */
 
 .lb-popup{
     display:none;
@@ -191,6 +232,14 @@
     margin-bottom: 1em;
 }
 
+.lb-popup.theme2 .lb-form-row{
+    margin-bottom: 0.8em;
+}
+
+.lb-popup.theme2 .lb-form-row--checkbox{
+    text-align: left;
+}
+
 .lb-popup.theme2 .lb-input{
     display:block;
     width:100%;
@@ -198,8 +247,39 @@
     font-size:16px;
     border-radius: 4px;
     border: 1px solid #ccc;
-    margin: 0 auto 0.8em;
+    margin: 0 auto;
     box-sizing: border-box;
+}
+
+.lb-popup.theme2 .lb-checkbox{
+    display:block;
+    width:0;
+    height:0;
+    overflow: hidden;
+}
+
+.lb-popup.theme2 .lb-checkbox-label{
+    font-size: 0.8em;
+    color: #666;
+    vertical-align: middle;
+    cursor:pointer;
+}
+
+.lb-popup.theme2 .lb-checkbox-label:before{
+    display:inline-block;
+    width: 15px;
+    height:15px;
+    margin-right: 5px;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjIgMnYyMGgtMjB2LTIwaDIwem0yLTJoLTI0djI0aDI0di0yNHoiLz48L3N2Zz4=");
+    background-size: 100%;
+    content:'';
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+}
+
+.lb-popup.theme2 .lb-checkbox:checked + .lb-checkbox-label:before{
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjIgMnYyMGgtMjB2LTIwaDIwem0yLTJoLTI0djI0aDI0di0yNHptLTUuNTQxIDguNDA5bC0xLjQyMi0xLjQwOS03LjAyMSA3LjE4My0zLjA4LTIuOTM3LTEuMzk1IDEuNDM1IDQuNSA0LjMxOSA4LjQxOC04LjU5MXoiLz48L3N2Zz4=");
 }
 
 .lb-popup.theme2 .lb-success-message{
@@ -238,7 +318,6 @@
 	text-shadow:0px 1px 0px #3d768a;
     width:100%;
     min-width:120px;
-    margin-bottom: 0.8em;
     box-sizing: border-box;
 }
 
@@ -253,5 +332,5 @@
 	background-color:#408c99;
 }
 .lb-popup.theme2 .lb-submit:active {
-	transform: scale(0.95);
+	transform: scale(0.97);
 }

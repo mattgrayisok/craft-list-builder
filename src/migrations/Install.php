@@ -104,6 +104,7 @@ class Install extends Migration
                     //'siteId' => $this->integer()->notNull(),
                     'email' => $this->string(255)->notNull()->defaultValue(''),
                     'sourceId' => $this->integer()->defaultValue(null),
+                    'consent' => $this->integer()->defaultValue(0),
                 ]
             );
         }

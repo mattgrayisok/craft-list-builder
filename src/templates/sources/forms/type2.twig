@@ -70,6 +70,32 @@
     }) }}
 
     {{ forms.lightswitchField({
+        label: "Include consent checkbox" | t('list-builder'),
+        instructions: "When enabled the form will include a check box which complies with GDPR consent rules." | t('list-builder'),
+        name: 'conf-consent',
+        on: source.getConfigValue('consent') ?? false,
+    }) }}
+
+    {{ forms.lightswitchField({
+        label: "Allow signups without consent" | t('list-builder'),
+        instructions: "If consent is enabled, should users be able to subscribe without giving consent?" | t('list-builder'),
+        name: 'conf-allownoconsent',
+        on: source.getConfigValue('allownoconsent') ?? false,
+    }) }}
+
+    {{ forms.textField({
+        label: "Custom consent message" | t('list-builder'),
+        instructions: "Enter a custom message to show alongside the consent checkbox.<br>
+You can include links to your privacy policy using a standard &lt;a&gt; tag<br>
+Leave blank to use the default." | t('list-builder'),
+        id: 'conf-consenttext',
+        name: 'conf-consenttext',
+        value: source.getConfigValue('consenttext'),
+        errors: source.getErrors('consenttext'),
+        required: false,
+    }) }}
+
+    {{ forms.lightswitchField({
         label: "Use Ajax" | t('list-builder'),
         instructions: "Should the form use ajax to avoid page reloads?" | t('list-builder'),
         name: 'conf-ajax',

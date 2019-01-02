@@ -31,6 +31,7 @@ class Signup extends Model
     public $email = '';
     public $sourceId = null;
     public $dateCreated = null;
+    public $consent = Enums::CONSENT__UNKNOWN;
 
     /**
      * @inheritdoc
@@ -40,6 +41,7 @@ class Signup extends Model
         return [
             ['email', 'integer'],
             ['sourceId', 'integer'],
+            ['consent', 'integer'],
         ];
     }
 }

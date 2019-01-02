@@ -46,6 +46,7 @@ class SignupManager extends Component
         $record = new SignupRecord();
         $record->email = $signup->email;
         $record->sourceId = $signup->sourceId;
+        $record->consent = $signup->consent;
         $record->save();
 
         return true;
@@ -163,6 +164,7 @@ class SignupManager extends Component
             'dateCreated',
             'email',
             'sourceId',
+            'consent',
         ]));
     }
 }

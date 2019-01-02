@@ -87,6 +87,8 @@ var lbFuncWrapper = function(){
         form.parentNode.classList.add("lb-status--success");
         for (var i = 0, element; el = form.elements[i++];) {
             if(!el.name) continue;
+            if(el.type == 'hidden') continue;
+            if(el.type == 'checkbox') continue;
             if(el.disabled) continue;
             el.value = "";
         }
