@@ -56,7 +56,5 @@ Coming soon:
 
 * Custom Fields
 * Convert kit integration
-* Double opt in support
-* List exporting as CSV
 
 Brought to you by [Matt Gray](https://mattgrayisok.com)
