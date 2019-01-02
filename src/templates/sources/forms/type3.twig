@@ -102,6 +102,16 @@
     }) }}
 
     {{ forms.textField({
+        label: "Button Text" | t('list-builder'),
+        instructions: "The text which appears on the submit button." | t('list-builder'),
+        id: 'conf-submittext',
+        name: 'conf-submittext',
+        value: source.getConfigValue('submittext'),
+        errors: source.getErrors('submittext'),
+        required: false,
+    }) }}
+
+    {{ forms.textField({
         label: "Success message" | t('list-builder'),
         instructions: "The message to display when a user successfully subscribes.",
         id: 'conf-success-message',

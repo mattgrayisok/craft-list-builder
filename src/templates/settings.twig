@@ -16,7 +16,7 @@
 
 {% import "_includes/forms" as forms %}
 
-    <h3>Scheduling</h3>
+    <h2>Scheduling</h2>
     {{ forms.lightswitchField({
         label: "Schedule syncs when users subscribe" | t('list-builder'),
         instructions: "Every 10th subscription will trigger a sync job to be queued.<br>
@@ -24,4 +24,3 @@ Leave this enabled unless you have set up a cron to trigger the sync tasks on a 
         name: 'syncOnSubscribe',
         on: settings.syncOnSubscribe ?? true,
     }) }}
-    
