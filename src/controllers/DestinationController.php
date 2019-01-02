@@ -118,16 +118,12 @@ class DestinationController extends Controller
 
     public function actionSync()
     {
-        Craft::$app->queue->push(new Sync([
-            'description' => 'Syncing signups'
-        ]));
+        ListBuilder::$plugin->taskManager->scheduleSync();
     }
 
     public function actionSyncDash()
     {
-        Craft::$app->queue->push(new Sync([
-            'description' => 'Syncing signups'
-        ]));
+        ListBuilder::$plugin->taskManager->scheduleSync();
         return $this->redirect('list-builder/destinations/');
     }
 

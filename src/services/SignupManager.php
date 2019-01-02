@@ -49,6 +49,13 @@ class SignupManager extends Component
         $record->consent = $signup->consent;
         $record->save();
 
+        //Every 10 signups schedule a new sync task
+        if(ListBuilder::$plugin->getSettings()->syncOnSubscribe === '1'){
+            if($record->id % 10 == 0){
+                ListBuilder::$plugin->taskManager->scheduleSync();
+            }
+        }
+
         return true;
     }
 

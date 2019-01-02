@@ -1,0 +1,27 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * List Builder plugin for Craft CMS 3.x
+ *
+ * List Builder index.twig
+ *
+ * @author    Matt Gray
+ * @copyright Copyright (c) 2018 Matt Gray
+ * @link      https://mattgrayisok.com
+ * @package   ListBuilder
+ * @since     1.0.0
+ */
+#}
+
+
+{% import "_includes/forms" as forms %}
+
+    <h3>Scheduling</h3>
+    {{ forms.lightswitchField({
+        label: "Schedule syncs when users subscribe" | t('list-builder'),
+        instructions: "Every 10th subscription will trigger a sync job to be queued.<br>
+Leave this enabled unless you have set up a cron to trigger the sync tasks on a regular basis." | t('list-builder'),
+        name: 'syncOnSubscribe',
+        on: settings.syncOnSubscribe ?? true,
+    }) }}
+    

@@ -90,7 +90,7 @@ class SyncFails extends BaseJob
      */
     protected function defaultDescription(): string
     {
-        return Craft::t('list-builder', 'Syncing signups');
+        return Craft::t('list-builder', 'Syncing failed subscriptions');
     }
 
     protected function destinationToWrapper($destination)

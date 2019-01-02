@@ -13,6 +13,7 @@ namespace mattgrayisok\listbuilder;
 use mattgrayisok\listbuilder\services\SignupManager;
 use mattgrayisok\listbuilder\services\SourceManager;
 use mattgrayisok\listbuilder\services\DestinationManager;
+use mattgrayisok\listbuilder\services\TaskManager;
 use mattgrayisok\listbuilder\services\OutputHelpers;
 
 use mattgrayisok\listbuilder\assetbundles\listbuilder\ListBuilderFEAsset;
@@ -113,7 +114,7 @@ class ListBuilder extends Plugin
             'signups' => ['label' => 'Signups', 'url' => 'list-builder/signups'],
             'sources' => ['label' => 'Sources', 'url' => 'list-builder/sources'],
             'destinations' => ['label' => 'Destinations', 'url' => 'list-builder/destinations'],
-            // 'connections' => ['label' => 'Connections', 'url' => 'post-to-social/connections'],
+            'settings' => ['label' => 'Settings', 'url' => 'list-builder/settings'],
         ];
         return $item;
     }
@@ -186,6 +187,7 @@ class ListBuilder extends Plugin
             'sourceManager' => SourceManager::class,
             'destinationManager' => DestinationManager::class,
             'outputHelpers' => OutputHelpers::class,
+            'taskManager' => TaskManager::class,
         ]);
 
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $e) {
@@ -199,5 +201,19 @@ class ListBuilder extends Plugin
 
     // Protected Methods
     // =========================================================================
+
+    public function createSettingsModel()
+    {
+        return new \mattgrayisok\listbuilder\models\Settings();
+    }
+
+    public function settingsHtml()
+    {
+        return \Craft::$app->getView()->renderTemplate('list-builder/settings/index', [
+            'settings' => $this->getSettings()
+        ]);
+    }
+
+
 
 }

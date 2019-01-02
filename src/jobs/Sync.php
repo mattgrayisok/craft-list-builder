@@ -94,7 +94,7 @@ class Sync extends BaseJob
      */
     protected function defaultDescription(): string
     {
-        return Craft::t('list-builder', 'Syncing signups');
+        return Craft::t('list-builder', 'Syncing subscriptions');
     }
 
     protected function destinationToWrapper($destination)

@@ -37,7 +37,7 @@
     "extra": {
         "name": "List Builder",
         "handle": "list-builder",
-        "hasCpSettings": false,
+        "hasCpSettings": true,
         "hasCpSection": true,
         "changelogUrl": "https://raw.githubusercontent.com/mattgrayisok/craft-list-builder/master/CHANGELOG.md",
         "components": {
