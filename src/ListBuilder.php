@@ -163,6 +163,7 @@ class ListBuilder extends Plugin
                 $event->rules['list-builder/signups'] = 'list-builder/signup/index';
                 $event->rules['list-builder/signups/data'] = 'list-builder/signup/data';
                 $event->rules['list-builder/signups/graph'] = 'list-builder/signup/graph';
+                $event->rules['list-builder/signups/export'] = 'list-builder/signup/export';
 
                 $event->rules['list-builder/sources'] = 'list-builder/source/index';
                 $event->rules['list-builder/sources/<sourceId:\d+>'] = 'list-builder/source/show-edit';

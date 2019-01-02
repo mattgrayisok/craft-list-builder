@@ -52,6 +52,16 @@ class SignupManager extends Component
         return true;
     }
 
+    public function getSomeSignups($limit, $offset)
+    {
+        $myResults = SignupRecord::find()
+            ->limit($limit)
+            ->offset($offset)
+            ->all();
+
+        return $this->_recordsToModels($myResults);
+    }
+
     public function getSignupsFromSource(Source $source)
     {
         return SignupRecord::find()

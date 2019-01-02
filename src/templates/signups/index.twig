@@ -25,9 +25,9 @@
 {% set pluginCpUrl = url('list-builder') %}
 {% set selectedSubnavItem = 'signups' %}
 
-{# block actionButton %}
+{% block actionButton %}
     <a href="{{ url('list-builder/signups/export') }}" class="btn submit">{{ 'Export to CSV'|t('list-builder') }}</a>
-{% endblock #}
+{% endblock %}
 
 {# set iconUrl = view.getAssetManager().getPublishedUrl('@mattgrayisok/listbuilder/assetbundles/listbuilder/dist', true) ~ '/img/Index-icon.svg' #}
 

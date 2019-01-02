@@ -18,6 +18,7 @@ use mattgrayisok\listbuilder\models\Signup;
 use Craft;
 use Yii;
 use craft\web\Controller;
+use craft\helpers\Assets;
 
 /**
  * @author    Matt Gray
@@ -176,7 +177,44 @@ class SignupController extends Controller
         return null;
     }
 
-    private function fTime($time, $gran=-1) {
+    public function actionExport()
+    {
+        $batchSize = 2;
+        $offset = 0;
+        $output = '';
+        $delimiter = ',';
+
+        $headings = [
+            'email',
+            'date subscribed',
+            'consent'
+        ];
+
+        $tempPath = Assets::tempFilePath();
+        $f = fopen($tempPath, 'w');
+
+        fputcsv($f, $headings, $delimiter);
+
+        $signups = ListBuilder::$plugin->signupManager->getSomeSignups($batchSize, $offset);
+        while(sizeof($signups) > 0){
+
+            foreach($signups as $signup){
+                $consent = $signup->consent == Enums::CONSENT__YES ? 'Yes' :
+                    ($signup->consent == Enums::CONSENT__NO ? 'No' : 'Unknown');
+                $line = [$signup->email, $signup->dateCreated->format('Y-m-d H:i:s'), $consent];
+                fputcsv($f, $line, $delimiter);
+            }
+
+            $offset += $batchSize;
+            $signups = ListBuilder::$plugin->signupManager->getSomeSignups($batchSize, $offset);
+        }
+        fclose($f);
+        $date = (new \DateTime())->format('YmdHis');
+        $filename = "subscriptions-".$date.'.csv';
+        return Yii::$app->response->sendFile($tempPath, $filename);
+    }
+
+    private function fTime($time, $gran=2) {
 
         $d[0] = array(1,"second");
         $d[1] = array(60,"minute");
