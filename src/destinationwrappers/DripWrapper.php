@@ -58,6 +58,10 @@ class DripWrapper implements DestinationWrapperInterface
             if(sizeof($errors) > 0){
                 $error = $errors[0];
                 $code = $error->get_code();
+                if($code == 'uniqueness_error'){
+                    $attempts[] = ['signupId' => $signup->id, 'success' => true];
+                    continue;
+                }
                 if($code == 'authentication_error'){
                     throw new DestinationException("Invalid API key");
                 }
@@ -73,6 +77,10 @@ class DripWrapper implements DestinationWrapperInterface
             if(!isset($config['disableonerror']) || $config['disableonerror']){
                 //If we're disabling on unexpected error
                 $error = "An unknown error occured communicating with Drip";
+                if(sizeof($errors) > 0){
+                    $errorObj = $errors[0];
+                    $error = $errorObj->get_message();
+                }
                 throw new DestinationException($error);
             }else{
                 //If we're ignoring errors just set this as a failure so it isn't retried over and over
