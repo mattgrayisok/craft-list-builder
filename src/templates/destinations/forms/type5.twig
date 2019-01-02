@@ -28,12 +28,22 @@
     }) }}
 
     {{ forms.textField({
-        label: "List Id" | t('list-builder'),
+        label: "Account ID" | t('list-builder'),
         instructions: "Drip Account ID." | t('list-builder'),
         id: 'conf-accountid',
         name: 'conf-accountid',
         value: destination.getConfigValue('accountid'),
         errors: destination.getErrors('accountid'),
+        required: true,
+    }) }}
+
+    {{ forms.textField({
+        label: "Campaign ID" | t('list-builder'),
+        instructions: "Drip Campaign ID." | t('list-builder'),
+        id: 'conf-campaignid',
+        name: 'conf-campaignid',
+        value: destination.getConfigValue('campaignid'),
+        errors: destination.getErrors('campaignid'),
         required: true,
     }) }}
 

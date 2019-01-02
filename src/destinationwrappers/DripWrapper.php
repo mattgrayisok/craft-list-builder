@@ -11,6 +11,7 @@
 namespace mattgrayisok\listbuilder\destinationwrappers;
 
 use mattgrayisok\listbuilder\ListBuilder;
+use mattgrayisok\listbuilder\Enums;
 use mattgrayisok\listbuilder\exceptions\DestinationException;
 use mattgrayisok\listbuilder\exceptions\SignupSubmitException;
 
@@ -31,78 +32,54 @@ class DripWrapper implements DestinationWrapperInterface
         }
 
         $config = json_decode($destination->config, true);
-        $listId = $config['listid'];
+        $accountId = $config['accountid'];
         $apiKey = $config['apikey'];
+        $campaignId = $config['campaignid'];
 
         $attempts = [];
 
-        /*$sendGrid = new \SendGrid($apiKey);
+        $drip = new \Drip\Client($apiKey, $accountId);
 
-        $allRecipients = array_map(function($signup){
-            return [
-                'email' => $signup->email
-            ];
-        }, $signups);
+        foreach ($signups as $signup) {
 
-        $response = $sendGrid->client->contactdb()->recipients()->post($allRecipients);
+            $response = $drip->subscribe_subscriber([
+                'campaign_id' => $campaignId,
+                'email' => $signup->email,
+                'eu_consent' => $signup->consent == Enums::CONSENT__YES ? 'granted' : 'denied'
+            ]);
 
-        $decoded = json_decode($response->body());
-        if(!is_null($decoded)){
-            if(isset($decoded->persisted_recipients)){
-                $successIds = $decoded->persisted_recipients;
-                $errorIndices = $decoded->error_indices;
+            if(is_a($response, \Drip\SuccessResponse::class)){
+                $attempts[] = ['signupId' => $signup->id, 'success' => true];
+                continue;
+            }
+
+            //Handle known errors
+            $errors = $response->get_errors();
+            if(sizeof($errors) > 0){
+                $error = $errors[0];
+                $code = $error->get_code();
+                if($code == 'authentication_error'){
+                    throw new DestinationException("Invalid API key");
+                }
+                if($code == 'authorization_error'){
+                    throw new DestinationException("This Drip user doesn't have permission to add subscribers to campaigns");
+                }
+                if($code == 'not_found_error'){
+                    throw new DestinationException("Invalid account or campaign ID");
+                }
+            }
+
+            //Handle unexpected errors
+            if(!isset($config['disableonerror']) || $config['disableonerror']){
+                //If we're disabling on unexpected error
+                $error = "An unknown error occured communicating with Drip";
+                throw new DestinationException($error);
             }else{
-                //Got a response but it doesn't contain persisted recipients - must have had an error
-                if(isset($decoded->errors) && sizeof($decoded->errors) > 0){
-                    $msg = $decoded->errors[0]['message'];
-                    if($msg == 'access forbidden') {
-                        throw new DestinationException("API Key is invalid");
-                    }
-                    throw new DestinationException($msg);
-                }
-                throw new DestinationException("An unknown error occured");
+                //If we're ignoring errors just set this as a failure so it isn't retried over and over
+                $attempts[] = ['signupId' => $signup->id, 'success' => false];
             }
-        }else{
-            //Couldn't decode response - crap out
-            throw new DestinationException("Error communicating with SendGrid");
         }
-
-        if(empty($listId)){
-            foreach($signups as $signup){
-                $attempts[] = ['signupId' => $signup->id, 'success' => true];
-            }
-            return $attempts;
-        }
-
-        //Add all of these users to the specified list
-        $response = $sendGrid->client->contactdb()->lists()->_($listId)->recipients()->post($successIds);
-        $status = $response->statusCode();
-
-        //Success from this call is a 201 with empty body
-        if($status == 201){
-            foreach($signups as $signup){
-                $attempts[] = ['signupId' => $signup->id, 'success' => true];
-            }
-            return $attempts;
-        }
-
-        $decoded = json_decode($response->body());
-        if(!is_null($decoded)){
-            //Got a response but it doesn't contain persisted recipients - must have had an error
-            if(isset($decoded->errors) && sizeof($decoded->errors) > 0){
-                $msg = $decoded->errors[0]['message'];
-                if($msg == 'List ID is invalid') {
-                    throw new DestinationException("List ID is invalid");
-                }
-                throw new DestinationException($msg);
-            }
-            throw new DestinationException("An unknown error occured");
-        }else{
-            //Couldn't decode response - crap out
-            throw new DestinationException("Error communicating with SendGrid");
-        }*/
 
         return $attempts;
-
     }
 }

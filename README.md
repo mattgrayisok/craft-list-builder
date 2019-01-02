@@ -66,10 +66,18 @@ A console command is available if you'd like to run sync tasks on a schedule. Si
 
 ## Roadmap
 
-### Version 1.1
+### Version 1.x
 
 - Custom fields
 - Improved documentation
+- Convert Kit integration
+- AWeber integration
+
+### Version 2.x
+
+- Page whitelisting/blacklisting
+- Additional themes
+- Convert Kit integration
 
 ## Credits
 
