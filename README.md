@@ -13,8 +13,9 @@ The ultimate [Craft CMS](https://craftcms.com/) mailing list builder.
 - [License](#license)
 - [Requirements](#installation)
 - [Usage](#usage)
-- [Settings](#settings)
-- [How It Works](#how-it-works)
+- [Sources](#sources)
+- [Destinations](#destinations)
+- [Syncing](#syncing)
 - [Roadmap](#roadmap)
 - [Credits](#credits)
 
@@ -37,9 +38,31 @@ composer require mattgrayisok/craft-list-builder
 
 Once the plugin is installed, you'll need to set up a **Source** (a method of collecting emails) and optionally a **Destination** (somewhere to send emails that have been collected). You can view and export any emails that have been collected via the control panel or just allow them to be synced up to your marketing platform on a regular basis.
 
-## Settings
+## Sources
 
-*TODO: Detailed instructions for source and destination types*
+*TODO: Detailed instructions for sources*
+
+## Destinations
+
+*TODO: Detailed instructions for destinations*
+
+## Syncing
+
+Syncing subscribers up to marketing platforms can be a slow process. Because of this List Builder won't sync after every single email is collected. There are three triggers which can start a sync process:
+
+### Manual
+
+In the Destinations section of the plugin you'll find a `Sync All` button in the top right corner. Clicking this will immediately start a sync task running.
+
+### Every 10 Subscriptions
+
+By default the plugin will queue up a sync task for every 10 subscriptions that are received. This will only add the task to the queue though, you'll need to visit the control panel or be running an [async queue runner](https://github.com/ostark/craft-async-queue) for the task to actually process.
+
+The plugin is set up to ensure that only one sync task can be scheduled at any time so if many subscriptions are received before the queue is processed it will still only contain a single sync task.
+
+### Scheduled
+
+A console command is available if you'd like to run sync tasks on a schedule. Simply set up a cron job to execute `./craft list-builder/subscribers/sync` as often as you would like. The plugin is set up to ensure that only one sync task can be scheduled at any time as there's no benefit in allowing these tasks to overlap.
 
 ## Roadmap
 
