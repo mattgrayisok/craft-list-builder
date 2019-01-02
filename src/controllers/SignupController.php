@@ -179,7 +179,7 @@ class SignupController extends Controller
 
     public function actionExport()
     {
-        $batchSize = 2;
+        $batchSize = 50;
         $offset = 0;
         $output = '';
         $delimiter = ',';
