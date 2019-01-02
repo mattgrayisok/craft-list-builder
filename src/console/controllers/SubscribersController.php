@@ -18,13 +18,13 @@ use craft\helpers\App;
 use yii\console\Controller;
 
 /**
- * ListBuilder sync command
+ * ListBuilder subscriptions operations
  *
  * @author    Matt Gray
  * @package   ListBuilder
  * @since     1.0.0
  */
-class SyncController extends Controller
+class SubscribersController extends Controller
 {
 
     /**
