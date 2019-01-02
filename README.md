@@ -1,6 +1,6 @@
-# List Builder plugin for Craft CMS 3.x
+# List Builder for Craft CMS 3
 
-The ultimate Craft CMS mailing list builder.
+The ultimate [Craft CMS](https://craftcms.com/) mailing list builder.
 
 * Easily create and integrate subscriptions forms
 * Little-to-no code required
@@ -8,53 +8,93 @@ The ultimate Craft CMS mailing list builder.
 * Create popups which display after a delay or using an exit intent
 * GDPR consent tracking
 
-*This is a paid plugin*. Licenses are available from the Craft Plugin Store.
+## Contents
 
-## Integrations
+- [License](#license)
+- [Requirements](#installation)
+- [Usage](#usage)
+- [Settings](#settings)
+- [How It Works](#how-it-works)
+- [Roadmap](#roadmap)
+- [Credits](#credits)
 
-List Builder currently integrates with:
+## License
 
-* Mailchimp
-* SendGrid
-* Email Octopus
-* Drip
-* Custom Webhooks
+This plugin requires a commercial license which can be purchased through the Craft Plugin Store.  
+The license fee is $49 plus \$19 per subsequent year for updates (optional).
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0-beta.23 or later.
+This plugin requires Craft CMS 3.0.0 or later.
 
-## Installation
+## Usage
 
-To install the plugin, search for **List Builder** in the Craft Plugin store.
+Install the plugin from the Craft Plugin Store in your site’s control panel or manually using composer.
 
-**OR**
+```
+composer require mattgrayisok/craft-list-builder
+```
 
-To install manually follow these instructions:
+Once the plugin is installed, you'll need to set up a Source (a method of collecting emails) and optionally a Destination (somewhere to send emails that have been collected). You can view and export any emails that have been collected via the control panel or just allow them to be synced up to your marketing platform on a regular basis.
 
-1. Open your terminal and go to your Craft project:
+## Settings
 
-        cd /path/to/project
+> Give a summary of the plugin settings or explain what each of the settings does. Embed a screenshot beneath the text if appropriate.
 
-2. Then tell Composer to load the plugin:
+#### Enable Reporting
 
-        composer require mattgrayisok/craft-list-builder
+Enables the collection of data about the site for generation reports.
 
-3. In the Control Panel, go to Settings → Plugins and click the “Install” button for List Builder.
+#### Detail Level
 
-## Configuring List Builder
+The level of detail to collect about the site.
 
-TODO
+- Low : collects site data only.
+- Medium : collects site and user data.
+- High : collects site, user and interaction data.
 
-## Using List Builder
+> If the plugin comes with a `config.php` file then describe how to use it and explain any settings that are not already explained above.
 
-TODO
+### Configuration Settings
 
-## List Builder Roadmap
+The plugin comes with a config file for a multi-environment way to set the plugin settings. The config file also provides more advanced plugin configuration settings. To use it, copy the `config.php` to your project’s main `config` directory as `gamma.php` and uncomment any settings you wish to change.
 
-Coming soon:
+#### Ignore Sites
 
-* Custom Fields
-* Convert kit integration
+An array of site IDs to ignore when collecting data.
 
-Brought to you by [Matt Gray](https://mattgrayisok.com)
+#### Ignore Users
+
+An array of user IDs to ignore when collecting data.
+
+## How It Works
+
+> Use this section to go in-depth into how the plugin works, using subsections and screenshots where appropriate.
+
+The plugin monitors various things, collecting data about your sites, users and interactions.
+
+### Data Collection
+
+Data is collected automatically as the site is used.
+
+### Reporting
+
+Reports are created based on collected data.
+
+## Roadmap
+
+> Add planned features so that users can see what is in the pipeline.
+
+### Version 2.x
+
+- Better multi-site support.
+- Visual reports and graphs.
+- More advanced configuration settings.
+
+## Credits
+
+> Credit anyone who deserves it.
+
+Inspired in part by [pluginfactory.io](https://pluginfactory.io).
+
+Created by [PutYourLightsOn](https://putyourlightson.com/).
