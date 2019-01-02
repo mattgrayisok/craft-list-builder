@@ -11,6 +11,7 @@
 namespace mattgrayisok\listbuilder\controllers;
 
 use mattgrayisok\listbuilder\ListBuilder;
+use mattgrayisok\listbuilder\Enums;
 
 use mattgrayisok\listbuilder\models\Signup;
 use mattgrayisok\listbuilder\models\Source;
@@ -126,7 +127,9 @@ class SourceController extends Controller
 
         $source->type = $request->getBodyParam('type', $source->type);
         $source->config = json_encode($config);
-        $source->name = $request->getBodyParam('name', $source->name);
+        $source->name = empty($request->getBodyParam('name')) ?
+                            'New ' . Enums::sourceTypeToString($source->type) :
+                            $request->getBodyParam('name');
 
         return $source;
 

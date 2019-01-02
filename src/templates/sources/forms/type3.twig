@@ -7,6 +7,8 @@
     {% if source.id %}<input type="hidden" name="sourceId" value="{{ source.id }}">{% endif %}
     {{ csrfInput() }}
 
+    <h2>Description</h2>
+
     <p class="type-description">
         Popups require zero code and can be trigged at the optimum moment when a user is most likely to convert.
     </p>
@@ -20,6 +22,8 @@
         errors: source.getErrors('name'),
         required: false,
     }) }}
+
+    <h2>Display</h2>
 
     <div class="field" id="theme-field">
         <div class="heading">
@@ -97,6 +101,18 @@
         required: false,
     }) }}
 
+    {{ forms.textField({
+        label: "Success message" | t('list-builder'),
+        instructions: "The message to display when a user successfully subscribes.",
+        id: 'conf-success-message',
+        name: 'conf-success-message',
+        value: source.getConfigValue('success-message'),
+        errors: source.getErrors('success-message'),
+        required: false,
+    }) }}
+
+    <h2>Consent</h2>
+
     {{ forms.lightswitchField({
         label: "Include consent checkbox" | t('list-builder'),
         instructions: "When enabled the form will include a check box which complies with GDPR consent rules." | t('list-builder'),
@@ -123,6 +139,8 @@ Leave blank to use the default." | t('list-builder'),
         required: false,
     }) }}
 
+    <h2>Triggers</h2>
+
     {{ forms.textField({
         label: "Show after delay" | t('list-builder'),
         instructions: "The popup will display after this number of seconds.<br>Leave blank to disable." | t('list-builder'),
@@ -139,6 +157,8 @@ Leave blank to use the default." | t('list-builder'),
         name: 'conf-exitintent',
         on: source.getConfigValue('exitintent') ?? false,
     }) }}
+
+    <h2>Submissions</h2>
 
     {{ forms.lightswitchField({
         label: "Use Ajax" | t('list-builder'),
@@ -157,15 +177,6 @@ Leave blank to use the default." | t('list-builder'),
         required: false,
     }) }}
 
-    {{ forms.textField({
-        label: "Success message" | t('list-builder'),
-        instructions: "The message to display when a user successfully subscribes.",
-        id: 'conf-success-message',
-        name: 'conf-success-message',
-        value: source.getConfigValue('success-message'),
-        errors: source.getErrors('success-message'),
-        required: false,
-    }) }}
 
     <button type="submit" class="btn submit">Save</button>
 

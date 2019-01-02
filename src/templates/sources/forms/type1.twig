@@ -7,7 +7,7 @@
     {% if source.id %}<input type="hidden" name="sourceId" value="{{ source.id }}">{% endif %}
     {{ csrfInput() }}
 
-    <p class="type-description">
+    <p class="textline">
         Custom sources will just set up the back end for you, so all of the front end implementation is up to you.
         This is useful if you need very strict control over the DOM or you are building an SPA which isn't powered
         by your twig templates.
