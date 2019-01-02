@@ -214,7 +214,7 @@ class SignupController extends Controller
         return Yii::$app->response->sendFile($tempPath, $filename);
     }
 
-    private function fTime($time, $gran=2) {
+    private function fTime($time, $gran=-1) {
 
         $d[0] = array(1,"second");
         $d[1] = array(60,"minute");
