@@ -41,7 +41,8 @@ class WebhookWrapper implements DestinationWrapperInterface
             );
 
             $postVals = [
-                'email' => $signup->email
+                'email' => $signup->email,
+                'consent' => $signup->consent,
             ];
 
             $ch = curl_init();

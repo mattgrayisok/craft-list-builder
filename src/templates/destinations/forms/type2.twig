@@ -37,6 +37,17 @@
         required: true,
     }) }}
 
+    {{ forms.textField({
+        label: "Consent Marketing Permission ID" | t('list-builder'),
+        instructions: "If you are capturing consents along with your signups you can sync them with a marketing permission ID in mailchimp.<br >
+Enter the ID of the permission that you'd like to set here." | t('list-builder'),
+        id: 'conf-marketingpermissionid',
+        name: 'conf-marketingpermissionid',
+        value: destination.getConfigValue('marketingpermissionid'),
+        errors: destination.getErrors('marketingpermissionid'),
+        required: false,
+    }) }}
+
     {{ forms.lightswitchField({
         label: "Disable On Unexpected Error" | t('list-builder'),
         instructions: "If a remote server error occurs that we aren't sure how to handle, should the destination be disabled?" | t('list-builder'),

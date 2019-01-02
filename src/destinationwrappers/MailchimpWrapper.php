@@ -11,6 +11,7 @@
 namespace mattgrayisok\listbuilder\destinationwrappers;
 
 use mattgrayisok\listbuilder\ListBuilder;
+use mattgrayisok\listbuilder\Enums;
 use mattgrayisok\listbuilder\exceptions\DestinationException;
 use mattgrayisok\listbuilder\exceptions\SignupSubmitException;
 
@@ -43,10 +44,21 @@ class MailchimpWrapper implements DestinationWrapperInterface
 
         foreach($signups as $signup){
 
-            $result = $MailChimp->post("lists/$listId/members", [
+            $data = [
 				'email_address' => $signup->email,
 				'status'        => 'subscribed',
-			]);
+			];
+
+            if(!empty($config['marketingpermissionid'])){
+                $data['marketing_permissions'] = [
+                    [
+                        'marketing_permission_id' => $config['marketingpermissionid'],
+                        'enabled' => $signup->consent == Enums::CONSENT__YES
+                    ],
+                ];
+            }
+
+            $result = $MailChimp->post("lists/$listId/members", $data);
 
             if($MailChimp->success()){
                 $attempts[] = ['signupId' => $signup->id, 'success' => true];
@@ -58,6 +70,9 @@ class MailchimpWrapper implements DestinationWrapperInterface
             //Handle known errors
             if (!is_null($errorBody)) {
                 if($errorBody->title == 'Member Exists'){
+                    $attempts[] = ['signupId' => $signup->id, 'success' => true];
+                    continue;
+                }else if($errorBody->title == 'Forgotten Email Not Subscribed'){
                     $attempts[] = ['signupId' => $signup->id, 'success' => true];
                     continue;
                 }else if($errorBody->title == 'API Key Invalid'){
@@ -75,6 +90,9 @@ class MailchimpWrapper implements DestinationWrapperInterface
                 $error = "An unknown error occured communicating with Mailchimp";
                 if(!is_null($errorBody) && isset($errorBody->title)){
                     $error = $errorBody->title;
+                    if(isset($errorBody->detail)){
+                        $error .= ' - '.$errorBody->detail;
+                    }
                 }
                 throw new DestinationException($error);
             }else{
