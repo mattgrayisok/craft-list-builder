@@ -16,6 +16,7 @@ The ultimate [Craft CMS](https://craftcms.com/) mailing list builder.
 - [Sources](#sources)
 - [Destinations](#destinations)
 - [Syncing](#syncing)
+- [Support](#support)
 - [Roadmap](#roadmap)
 - [Credits](#credits)
 
@@ -64,6 +65,17 @@ The plugin is set up to ensure that only one sync task can be scheduled at any t
 
 A console command is available if you'd like to run sync tasks on a schedule. Simply set up a cron job to execute `./craft list-builder/subscribers/sync` as often as you would like. The plugin is set up to ensure that only one sync task can be scheduled at any time as there's no benefit in allowing these tasks to overlap.
 
+## Support
+
+If you encounter any issues during the use of this plugin please let me know by:
+
+* Creating an issue on GitHub
+* Dropping me an email: matt at mattgrayisok dot com
+* Finding me in the Craft Slack: @Matt
+* DMing me on Twitter: @mattgrayisok
+
+I'll respond to critical issues as quickly as I can.
+
 ## Roadmap
 
 ### Version 1.x
@@ -72,12 +84,15 @@ A console command is available if you'd like to run sync tasks on a schedule. Si
 - Improved documentation
 - Convert Kit integration
 - AWeber integration
+- Campaign Monitor integration
+- Additional dashboard insights
 
 ### Version 2.x
 
-- Page whitelisting/blacklisting
+- Page whitelisting/blacklisting for popups
 - Additional themes
-- Convert Kit integration
+- Multi-site support
+
 
 ## Credits
 
