@@ -51,6 +51,14 @@ class SourceController extends Controller
         return $this->renderTemplate('list-builder/sources/index', $variables);
     }
 
+    public function actionInstructions($sourceId)
+    {
+        $variables = [];
+        $source = ListBuilder::$plugin->sourceManager->getSourceById($sourceId);
+        $variables['source'] = $source;
+        return $this->renderTemplate('list-builder/sources/instructions/type'.$source->type, $variables);
+    }
+
     public function actionShowEdit($sourceId = null)
     {
         $variables = [];

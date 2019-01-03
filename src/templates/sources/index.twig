@@ -38,7 +38,7 @@
             <th>Type</th>
             <th>Emails Collected</th>
             <th>Code</th>
-            <th>Instructions</th>
+            <th></th>
             <th class="thin"></th>
         </thead>
         {% for source in sources %}
@@ -47,7 +47,7 @@
                 <td>{{ source.getTypeName() }}</td>
                 <td>{{ source.getTotalEmailsCollected() }}</td>
                 <td>{{ source.shortcode }}</td>
-                <td>Instructions</td>
+                <td><a href="#" class="js-lb-instructions" data-source="{{ source.id }}">Instructions</a></td>
                 <td class="thin">
                     <form method="POST" action="" class="">
                         {{ csrfInput() }}

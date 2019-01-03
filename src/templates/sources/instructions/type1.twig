@@ -1,0 +1,76 @@
+<div id="my-modal" class="modal">
+    <header class="header">
+        <h2>Manual Source Instructions</h2>
+    </header>
+    <div class="body" style="overflow:auto;height:calc(100% - 68px)">
+        <h3>Intro</h3>
+        <p>
+            Manual forms don't provide any front end scaffolding for you to use so you are free to
+            create whatever you like with your HTML, CSS and JS. All you need to do is POST the
+            correct parameters to the correct URL in order to submit the form.
+        </p>
+        <h3>Endpoint</h3>
+        <p>Your form will need to have a method set to 'POST'. The controller action that you need
+            to target is:</p>
+        <code>/actions/list-builder/signup/store</code>
+        <h3>Content</h3>
+        <p>You will need to send the following parameters along with your request:</p>
+        <table class="data fullwidth">
+            <thead>
+                <tr>
+                    <th scope="col">Param Name</th>
+                    <th scope="col">Required</th>
+                    <th scope="col">Hidden</th>
+                    <th scope="col">Contents</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">email</th>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>The email address as entered by the end user</td>
+                </tr>
+                <tr>
+                    <th scope="row">source</th>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>The 'code' from the Sources table in the control panel</td>
+                </tr>
+                <tr>
+                    <th scope="row">CRAFT_CSRF_TOKEN</th>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>A standard Craft CSRF token</td>
+                </tr>
+                <tr>
+                    <th scope="row">consent</th>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Either '0' or '1'. If ommited the signup will have a consent status of 'Unknown'</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Ajax</h3>
+        <p>You can send the POST request via a standard form submission or using ajax. If using ajax
+            ensure that you're still submitting the form using 'x-www-form-urlencoded'.
+        </p>
+        <p>When you submit via ajax you can expect a json response which looks like:
+        </p>
+        <code>
+            {
+                "status":"success"
+            }
+        </code>
+        <p>Or</p>
+        <code>
+            {
+                "status":"error",
+                "message":"Invalid email address."
+            }
+        </code>
+        <p>You can use the error message to display back to the user what went wrong.</p>
+
+    </div>
+
+</div>

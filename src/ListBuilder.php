@@ -169,6 +169,7 @@ class ListBuilder extends Plugin
                 $event->rules['list-builder/sources'] = 'list-builder/source/index';
                 $event->rules['list-builder/sources/<sourceId:\d+>'] = 'list-builder/source/show-edit';
                 $event->rules['list-builder/sources/new'] = 'list-builder/source/show-edit';
+                $event->rules['list-builder/sources/instructions/<sourceId:\d+>'] = 'list-builder/source/instructions';
 
                 $event->rules['list-builder/destinations'] = 'list-builder/destination/index';
                 $event->rules['list-builder/destinations/<destinationId:\d+>'] = 'list-builder/destination/show-edit';

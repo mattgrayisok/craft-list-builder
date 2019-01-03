@@ -1,0 +1,61 @@
+<div id="my-modal" class="modal">
+    <header class="header">
+        <h2>Inline Source Instructions</h2>
+    </header>
+    <div class="body" style="overflow:auto;height:calc(100% - 68px)">
+        <h3>Intro</h3>
+        <p>
+            Inline forms use auto-generated HTML in order to render your signup form with minimal
+            input from you.
+        </p>
+        <h3>Add to Your Templates</h3>
+        <p>In order to add an inline form to your templates you just need to use a simple twig command:</p>
+        <code>{{ '{{' }} craft.listbuilder.inline('{{ source.shortcode }}') {{ '}}' }}</code>
+        <h3>HTML</h3>
+        <p>This will render a form with the following HTML:</p>
+        {% set htmlCode =
+'<div class="lb-inline lb-status--success">
+    <form method="POST" class="lb-form" data-ajax-enabled="1" data-has-consent="1">
+        <input type="hidden" name="action" value="list-builder/signup/store">
+        <input type="hidden" name="source" value="' ~ source.shortcode ~ '">
+        {{ csrfInput() }}
+
+        <div class="lb-title">Your title</div>
+        <div class="lb-text">Your additional text</div>
+
+        <div class="lb-form-row lb-form-row--input">
+            <input class="lb-input lb-input--email" type="email" id="email-9999" name="email" placeholder="Your Email">
+        </div>
+
+        <div class="lb-form-row lb-form-row--checkbox">
+            <input type="hidden" value="0" name="consent">
+            <input class="lb-checkbox" type="checkbox" id="consent-9999" name="consent" value="1">
+            <label class="lb-checkbox-label" for="consent-9999">
+                I consent to receive information about services and special offers by email.
+            </label>
+        </div>
+
+        <div class="lb-form-row lb-form-row--buttons">
+            <button class="lb-submit" type="submit">
+                Subscribe
+            </button>
+        </div>
+
+        <div class="lb-success-message">Your success message</div>
+        <div class="lb-error-message">
+            Any relevant error message
+        </div>
+    </form>
+</div>' %}
+        <pre><code>{{ htmlCode|escape }}</code></pre>
+        <h3>Styling</h3>
+        <p>You can chose to leave your form unstyled, in which case you can use
+        the HTML above as a guide for styling. Alternatively you can select a pre-made
+        theme whilst configuring the Source. Attaching a theme to a form simply adds an
+        additional class to the wrapping <code>&lt;div&gt;</code>.</p>
+        <p>It is perfectly acceptable to apply a simple theme and then tweak the css
+        by overiding the applied styles using either <code>!important</code> or
+        greater css specificity (I've tried to keep my css nesting to a minimum).</p>
+    </div>
+
+</div>

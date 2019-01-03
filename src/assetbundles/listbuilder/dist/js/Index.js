@@ -63,4 +63,18 @@ $(document).ready( function () {
         });
     }
 
+    //Instructions
+    $('.js-lb-instructions').click(function(e){
+        e.preventDefault();
+        var sourceId = $(this).attr('data-source');
+        $.get(Craft.baseCpUrl + '/list-builder/sources/instructions/'+sourceId)
+        .done(function(data){
+            var $div = $(data);
+            var myModal = new Garnish.Modal($div);
+        }).fail(function(e){
+            alert('Error getting instructions');
+        })
+
+    })
+
 });

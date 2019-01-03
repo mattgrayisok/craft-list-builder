@@ -2,6 +2,9 @@
 
 The ultimate [Craft CMS](https://craftcms.com/) mailing list builder.
 
+Maximise your mailing list conversion rate with auto-generated inline forms and popups or go fully custom.
+
+
 * Easily create and integrate subscriptions forms
 * Little-to-no code required
 * Sync collected emails with popular marketing platforms
