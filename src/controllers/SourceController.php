@@ -59,19 +59,23 @@ class SourceController extends Controller
         return $this->renderTemplate('list-builder/sources/instructions/type'.$source->type, $variables);
     }
 
-    public function actionShowEdit($sourceId = null)
+    public function actionShowEdit($sourceId = null, $source = null)
     {
         $variables = [];
         $variables['elementType'] = Asset::class;
         $variables['headerimageElements'] = [];
-        if ($sourceId) {
-            $source = ListBuilder::$plugin->sourceManager->getSourceById($sourceId);
-            $variables['source'] = $source;
-            if(!is_null($source->getConfigValue('headerimage'))){
-                $variables['headerimageElements'] = $this->_imageAssetsFromIds($source->getConfigValue('headerimage'));
+        if(!$source){
+            if ($sourceId) {
+                $source = ListBuilder::$plugin->sourceManager->getSourceById($sourceId);
+                $variables['source'] = $source;
+                if(!is_null($source->getConfigValue('headerimage'))){
+                    $variables['headerimageElements'] = $this->_imageAssetsFromIds($source->getConfigValue('headerimage'));
+                }
+            } else {
+                $variables['source'] = new Source();
             }
-        } else {
-            $variables['source'] = new Source();
+        }else{
+            $variables['source'] = $source;
         }
 
         return $this->renderTemplate('list-builder/sources/edit', $variables);
@@ -83,7 +87,8 @@ class SourceController extends Controller
         $request = Craft::$app->getRequest();
 
         $source = $this->_getModelFromPost();
-        return $this->_saveAndRedirect($source, 'list-builder/sources/', true);
+        $r =  $this->_saveAndRedirect($source, 'list-builder/sources/', true);
+        return $r;
     }
 
     public function actionDelete()
@@ -116,7 +121,6 @@ class SourceController extends Controller
             $source = ListBuilder::$plugin->sourceManager->getSourceById($request->getBodyParam('sourceId'));
         } else {
             $source = new Source();
-            $source->shortcode = strtoupper(substr(md5(microtime()),rand(0,26),5));
         }
 
         //TODO: Need to validate config is ok for the remote type
@@ -133,6 +137,12 @@ class SourceController extends Controller
             }
         }
 
+        $source->shortcode = $request->getBodyParam('shortcode', $source->shortcode);
+        if(empty($source->shortcode)){
+            $source->shortcode = strtoupper(substr(md5(microtime()),rand(0,26),5));
+        }else{
+            $source->shortcode = $request->getBodyParam('shortcode', $source->shortcode);
+        }
         $source->type = $request->getBodyParam('type', $source->type);
         $source->config = json_encode($config);
         $source->name = empty($request->getBodyParam('name')) ?

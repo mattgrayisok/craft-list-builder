@@ -46,7 +46,8 @@ class Source extends Model
         return [
             ['type', 'integer'],
             ['config', 'string'],
-            ['shortcode', 'string'],
+            //['shortcode', 'string'],
+            ['shortcode', 'match', 'pattern' => '/^[a-zA-Z0-9_-]+$/', 'message' => 'The code can only contain alphanumeric characters, underscores and dashes.'],
             ['name', 'string'],
         ];
     }

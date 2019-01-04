@@ -15,11 +15,21 @@
 
     {{ forms.textField({
         label: "Reference" | t('list-builder'),
-        instructions: "Add a reference for this signup source so that it's easy to identify later." | t('post-to-social'),
+        instructions: "Add a reference for this signup source so that it's easy to identify later." | t('list-builder'),
         id: 'name',
         name: 'name',
         value: source.name,
         errors: source.getErrors('name'),
+        required: false,
+    }) }}
+
+    {{ forms.textField({
+        label: "Code" | t('list-builder'),
+        instructions: "A short string which you'll use to embed the form in twig templates.<br>Wlll be auto generated if left blank." | t('list-builder'),
+        id: 'shortcode',
+        name: 'shortcode',
+        value: source.shortcode,
+        errors: source.getErrors('shortcode'),
         required: false,
     }) }}
 

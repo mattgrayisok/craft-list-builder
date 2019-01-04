@@ -80,6 +80,16 @@ class SourceManager extends Component
             return false;
         }
 
+        $duplicate = SourceRecord::find()
+            ->where(['shortcode' => $model->shortcode])
+            ->all();
+
+        if (sizeof($duplicate) > 0) {
+            Craft::info('Source not saved due to validation error.', __METHOD__);
+            $model->addError('shortcode', 'A source with this code already exist');
+            return false;
+        }
+
         if ($isNewModel) {
             $record = new SourceRecord();
         } else {

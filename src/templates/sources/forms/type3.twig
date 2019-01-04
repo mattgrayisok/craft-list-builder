@@ -23,6 +23,17 @@
         required: false,
     }) }}
 
+
+    {{ forms.textField({
+        label: "Code" | t('list-builder'),
+        instructions: "A short string which you'll use to embed the form in twig templates.<br>Wlll be auto generated if left blank." | t('list-builder'),
+        id: 'shortcode',
+        name: 'shortcode',
+        value: source.shortcode,
+        errors: source.getErrors('shortcode'),
+        required: false,
+    }) }}
+
     <h2>Display</h2>
 
     <div class="field" id="theme-field">
