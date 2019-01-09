@@ -72,8 +72,6 @@ class ListBuilder extends Plugin
 
         $this->registerComponentsAndServices();
         $this->registerCPRoutes();
-        $this->registerGlobalRoutes();
-        $this->registerGlobalRoutes();
 
         //Once all plugins have loaded
         Event::on(
@@ -90,17 +88,6 @@ class ListBuilder extends Plugin
                 //if ($request->getIsCpRequest() && !$request->getIsConsoleRequest()) {
                 //    $this->handleAdminCpRequest();
                 //}
-            }
-        );
-    }
-
-    public function registerGlobalRoutes()
-    {
-        Event::on(
-            UrlManager::class,
-            UrlManager::EVENT_REGISTER_SITE_URL_RULES,
-            function (RegisterUrlRulesEvent $event) {
-                //$event->rules['siteActionTrigger1'] = 'list-builder/default';
             }
         );
     }
