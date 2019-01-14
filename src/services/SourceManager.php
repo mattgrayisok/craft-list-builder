@@ -82,6 +82,7 @@ class SourceManager extends Component
 
         $duplicate = SourceRecord::find()
             ->where(['shortcode' => $model->shortcode])
+            ->andWhere(['!=', 'id', $model->id])
             ->all();
 
         if (sizeof($duplicate) > 0) {
