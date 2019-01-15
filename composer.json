@@ -2,7 +2,7 @@
     "name": "mattgrayisok/craft-list-builder",
     "description": "The ultimate Craft CMS mailing list builder. Collect emails easily and sync with popular mailing list services.",
     "type": "craft-plugin",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "keywords": [
         "craft",
         "cms",

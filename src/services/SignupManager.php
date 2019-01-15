@@ -51,7 +51,10 @@ class SignupManager extends Component
 
         //Every 10 signups schedule a new sync task
         if(ListBuilder::$plugin->getSettings()->syncOnSubscribe === '1'){
-            if($record->id % 10 == 0){
+            //Get a count of subscriptions
+            $subStep = ListBuilder::$plugin->getSettings()->syncOnSubscribeStep;
+            $count = SignupRecord::find()->count();
+            if($count % $subStep == 0){
                 ListBuilder::$plugin->taskManager->scheduleSync();
             }
         }

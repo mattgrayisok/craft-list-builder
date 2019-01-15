@@ -19,8 +19,20 @@
     <h2>Scheduling</h2>
     {{ forms.lightswitchField({
         label: "Schedule syncs when users subscribe" | t('list-builder'),
-        instructions: "Every 10th subscription will trigger a sync job to be queued.<br>
+        instructions: "Every nth subscription will trigger a sync job to be queued.<br>
 Leave this enabled unless you have set up a cron to trigger the sync tasks on a regular basis." | t('list-builder'),
         name: 'syncOnSubscribe',
         on: settings.syncOnSubscribe ?? true,
+        required: true,
+
+    }) }}
+
+    {{ forms.textField({
+        label: "The number of subscriptions needed before a sync is scheduled" | t('list-builder'),
+        instructions: "If enabled above, how many subscribes should be needed to trigger a sync? " | t('list-builder'),
+        id: 'syncOnSubscribeStep',
+        name: 'syncOnSubscribeStep',
+        value: settings.syncOnSubscribeStep,
+        errors: settings.getErrors('syncOnSubscribeStep'),
+        required: true,
     }) }}
