@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.0.5 - 2019-06-09
+### Fixed
+- Non control panel JS is now IE11 friendly (removed `.forEach()`)
+
 ## 1.0.4 - 2019-01-15
 ### Updated
 - Chaged the method used to trigger subscription based syncs. This should be more reliable now
