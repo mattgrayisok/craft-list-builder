@@ -32,6 +32,10 @@ class SendgridWrapper implements DestinationWrapperInterface
 
         $attempts = [];
 
+        if (0 == sizeof($signups)) {
+            return $attempts;
+        }
+
         $sendGrid = new \SendGrid($apiKey);
 
         $allRecipients = array_map(function ($signup) {
@@ -40,14 +44,16 @@ class SendgridWrapper implements DestinationWrapperInterface
             ];
         }, $signups);
 
-        $response = $sendGrid->client->contactdb()->recipients()->post($allRecipients);
+        $fullData = ['contacts' => $allRecipients];
+        if (!empty($listId)) {
+            $fullData['list_ids'] = [$listId];
+        }
+
+        $response = $sendGrid->client->marketing()->contacts()->put($fullData);
 
         $decoded = json_decode($response->body());
         if (!is_null($decoded)) {
-            if (isset($decoded->persisted_recipients)) {
-                $successIds = $decoded->persisted_recipients;
-                $errorIndices = $decoded->error_indices;
-            } else {
+            if (!isset($decoded->job_id)) {
                 //Got a response but it doesn't contain persisted recipients - must have had an error
                 if (isset($decoded->errors) && sizeof($decoded->errors) > 0) {
                     $msg = $decoded->errors[0]->message;
@@ -65,43 +71,9 @@ class SendgridWrapper implements DestinationWrapperInterface
             throw new DestinationException('Error communicating with SendGrid');
         }
 
-        if (empty($listId)) {
-            foreach ($signups as $signup) {
-                $attempts[] = ['signupId' => $signup->id, 'success' => true];
-            }
-
-            return $attempts;
+        foreach ($signups as $signup) {
+            $attempts[] = ['signupId' => $signup->id, 'success' => true];
         }
-
-        //Add all of these users to the specified list
-        $response = $sendGrid->client->contactdb()->lists()->_($listId)->recipients()->post($successIds);
-        $status = $response->statusCode();
-
-        //Success from this call is a 201 with empty body
-        if (201 == $status) {
-            foreach ($signups as $signup) {
-                $attempts[] = ['signupId' => $signup->id, 'success' => true];
-            }
-
-            return $attempts;
-        }
-
-        $decoded = json_decode($response->body());
-        if (!is_null($decoded)) {
-            //Got a response but it doesn't contain persisted recipients - must have had an error
-            if (isset($decoded->errors) && sizeof($decoded->errors) > 0) {
-                $msg = $decoded->errors[0]->message;
-                if ('List ID is invalid' == $msg) {
-                    throw new DestinationException('List ID is invalid');
-                }
-
-                throw new DestinationException($msg);
-            }
-
-            throw new DestinationException('An unknown error occured');
-        }
-        //Couldn't decode response - crap out
-        throw new DestinationException('Error communicating with SendGrid');
 
         return $attempts;
     }
